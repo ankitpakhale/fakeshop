@@ -8,11 +8,20 @@ import {
 } from "../redux/actions/productActions";
 
 const ProductDetails = () => {
+  let newRate = null;
+  let newCount = null;
+
   // Again calling dispatched data using redux store
   let product = useSelector((state) => state.product); // we have used this (product) key in productActions.js
-  const { id, image, title, price, category, description } = product;
+  const { image, title, price, category, description, rating } = product;
+  console.info(image, title, price, category, description);
 
-  console.info(id, image, title, price, category, description);
+  if (rating !== undefined) {
+    const { rate, count } = rating;
+    newRate = rate;
+    newCount = count;
+    console.info("rate, count: ", rate, count);
+  }
 
   const { productId } = useParams();
   const dispatch = useDispatch();
@@ -23,7 +32,7 @@ const ProductDetails = () => {
       .catch((err) => {
         console.info("error", err);
       });
-    dispatch(selectedProduct(response));
+    dispatch(selectedProduct(response.data));
   };
 
   useEffect(() => {
@@ -50,6 +59,18 @@ const ProductDetails = () => {
                 <h2>
                   <a className="ui teal tag label">${price}</a>
                 </h2>
+
+                <div class="ui two column centered grid">
+                  <div class="four column centered row">
+                    <div class="column">
+                      {newRate && <h3>Rate: {newRate}</h3>}
+                    </div>
+                    <div class="column">
+                      {newCount && <h3>Count: {newCount}</h3>}
+                    </div>
+                  </div>
+                </div>
+
                 <h3 className="ui brown block header">{category}</h3>
                 <p>{description}</p>
                 <div className="ui vertical animated button" tabIndex="0">
