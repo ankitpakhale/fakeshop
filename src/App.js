@@ -10,15 +10,13 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path={"/"} exact component={ProductListing} />
+          <Route path="/" exact element={<ProductListing />} />
           <Route
-            path={"/product/:productId"}
+            path="/product/:productId"
             exact
-            component={ProductDetails}
+            element={<ProductDetails />}
           />
           <Route>404 Not Found!!!</Route>
-
-          {/* till 23:51 */}
         </Routes>
       </Router>
     </div>
